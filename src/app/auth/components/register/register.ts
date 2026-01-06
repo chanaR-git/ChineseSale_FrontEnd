@@ -10,10 +10,11 @@ import { ToastModule } from 'primeng/toast';
     selector: 'app-register',
     templateUrl: './register.html',
     standalone: true,
-    imports: [ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule, MessageModule]
+    imports: [ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule, MessageModule],
+    providers: [MessageService]
 })
 export class Register {
-    //messageService = inject(MessageService);
+    messageService = inject(MessageService);
 
      fb = inject(FormBuilder);
 
@@ -28,7 +29,7 @@ export class Register {
     onSubmit() {
         this.formSubmitted = true;
         if (this.registerForm.valid) {
-            //this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form Submitted', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Form Submitted', life: 3000 });
             this.registerForm.reset();
             this.formSubmitted = false;
         }
