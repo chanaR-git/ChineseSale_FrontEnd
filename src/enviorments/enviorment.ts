@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.yourdomain.com', // כתובת ה-API לסביבת הייצור
+  apiUrl:"https://localhost:7112"
 };

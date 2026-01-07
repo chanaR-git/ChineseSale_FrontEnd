@@ -25,7 +25,7 @@ export class AuthService {
             .pipe(tap((response:{token:string})=>{
               if(response.token)
                 localStorage.setItem('auth_token', response.token);
-            }));;
+            }));
   }
 }
 

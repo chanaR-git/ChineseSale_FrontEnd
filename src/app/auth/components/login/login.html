@@ -1,1 +1,28 @@
-<p>login works!</p>
+<p-toast></p-toast>
+
+<div class="card flex justify-center">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 w-full sm:w-56">
+        <!-- Email -->
+        <div class="flex flex-col gap-4">
+            <input pInputText type="email" id="email" placeholder="Email" formControlName="email"  [invalid]="isInvalid('email')" />
+            <p-message *ngIf="isInvalid('email')" severity="error" size="small" variant="simple">
+                @if (loginForm.get('email')?.errors?.['required'])
+                {
+                    <ng-container>Email is required.</ng-container>
+                }
+                @if (loginForm.get('email')?.errors?.['email'])
+                {
+                    <ng-container >Please enter a valid email.</ng-container>
+                }
+            </p-message>
+        </div>
+
+        <!-- Password -->
+        <div class="flex flex-col gap-4">
+            <p-password id="password" placeholder="Password" formControlName="password" [toggleMask]="true" [invalid]="isInvalid('password')" feedback="false"></p-password>
+            <p-message *ngIf="isInvalid('password')" severity="error" size="small" variant="simple">Password is required.</p-message>
+        </div>
+
+        <button pButton severity="secondary" type="submit"><span pButtonLabel>Login</span></button>
+    </form>
+</div>
