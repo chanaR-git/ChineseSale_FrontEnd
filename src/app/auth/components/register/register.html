@@ -3,8 +3,8 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 w-full sm:w-56">
         <!-- username -->
         <div class="flex flex-col gap-4">
-            <input pInputText type="text" id="username" placeholder="Username" formControlName="username" [invalid]="isInvalid('username')" />
-            @if (isInvalid('username')) {
+            <input pInputText type="text" id="username" placeholder="Username" formControlName="name" [invalid]="isInvalid('username')" />
+            @if (isInvalid('name')) {
                 <p-message severity="error" size="small" variant="simple">Username is required.</p-message>
             }
         </div>
