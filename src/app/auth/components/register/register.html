@@ -1,15 +1,32 @@
-<div>app register</div>
-aaaaaaaaa
 <p-toast />
 <div class="card flex justify-center">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 w-full sm:w-56">
-        <div class="flex flex-col gap-1">
+        <!-- username -->
+        <div class="flex flex-col gap-4">
             <input pInputText type="text" id="username" placeholder="Username" formControlName="username" [invalid]="isInvalid('username')" />
             @if (isInvalid('username')) {
                 <p-message severity="error" size="small" variant="simple">Username is required.</p-message>
             }
         </div>
-        <div class="flex flex-col gap-1">
+
+        <!-- password -->
+        <div class="flex flex-col gap-4">
+            <p-password id="password" placeholder="Password" formControlName="password" [toggleMask]="true" [invalid]="isInvalid('password')" feedback="false"></p-password>
+            @if(isInvalid('password')){
+                 @if(registerForm.get('password')?.errors?.['required']) {
+                    <p-message severity="error" size="small" variant="simple">Password is required.</p-message>
+                 }
+                @if(registerForm.get('password')?.errors?.['minlength'] || registerForm.get('password')?.errors?.['maxlength']) {
+                    <p-message severity="error" size="small" variant="simple">the password must be between 7-15.</p-message>
+                 }
+                 @if(registerForm.get('password')?.errors?.['pattern'] ){
+                    <p-message severity="error" size="small" variant="simple">please enter at least one uppercase letter, one lowercase letter, and one number.</p-message>
+                 }
+            }
+        </div>
+
+        <!-- email -->
+        <div class="flex flex-col gap-4">
             <input pInputText type="email" id="email" placeholder="Email" formControlName="email" [invalid]="isInvalid('email')" />
             @if (isInvalid('email')) {
                 @if (registerForm.get('email')?.errors?.['required']) {
@@ -18,6 +35,14 @@ aaaaaaaaa
                 @if (registerForm.get('email')?.errors?.['email']) {
                     <p-message severity="error" size="small" variant="simple">Please enter a valid email.</p-message>
                 }
+            }
+        </div>
+       
+        <!-- Phone -->
+        <div class="flex flex-col gap-4">
+            <p-inputMask mask="999- 999 9999" id="phone" formControlName="phone" [invalid]="isInvalid('phone')" placeholder="Phone Number"></p-inputMask>
+            @if(isInvalid('phone')){
+                <p-message  severity="error" size="small" variant="simple">Phone number is required.</p-message>
             }
         </div>
         <button pButton severity="secondary" type="submit"><span pButtonLabel>Submit</span></button>
