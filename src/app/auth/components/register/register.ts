@@ -29,10 +29,13 @@ export class Register {
     registerForm = this.fb.group(
       {
         name: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
         password: ['',[Validators.required,Validators.maxLength(15),Validators.minLength(7),Validators.pattern(".*[a-z].*"),Validators.pattern(".*[A-Z].*"),Validators.pattern(".*[0-9].*")]],
         phone:['',Validators.required]
       });
+      ngOnInit() {
+        this.registerForm.reset();
+      }
 
     onSubmit() {
         this.formSubmitted = true;

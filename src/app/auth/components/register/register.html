@@ -35,6 +35,9 @@
                 @if (registerForm.get('email')?.errors?.['email']) {
                     <p-message severity="error" size="small" variant="simple">Please enter a valid email.</p-message>
                 }
+                @if (registerForm.get('email')?.errors?.['maxLength']) {
+                    <p-message severity="error" size="small" variant="simple">Email must not exceed 50 characters.</p-message>
+                }
             }
         </div>
        
