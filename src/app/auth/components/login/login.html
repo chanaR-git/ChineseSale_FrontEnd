@@ -1,37 +1,56 @@
-<p-toast></p-toast>
+<p-toast />
 
-<div class="card flex justify-center">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 w-full sm:w-56">
-        <!-- Email -->
-        <div class="flex flex-col gap-4">
-            <input pInputText type="email" id="email" placeholder="Email" formControlName="email"  [invalid]="isInvalid('email')" />
-            @if(isInvalid('email')){
-                @if (loginForm.get('email')?.errors?.['required'])
-                {
-                        <p-message severity="error" size="small" variant="simple">Email is required.</p-message>
-                }
-                @if (loginForm.get('email')?.errors?.['email'])
-                {
-                    <p-message severity="error" size="small" variant="simple">Please enter a valid email.</p-message>
-                }
-            }
-        </div>
+<div class="flex-container">
+    <!-- <div class="header-section">
+        <h2>כניסה למערכת</h2>
+        <div class="divider"></div>
+    </div> -->
 
-        <!-- Password -->
-        <div class="flex flex-col gap-4">
-            <p-password id="password" placeholder="Password" formControlName="password" [toggleMask]="true" [invalid]="isInvalid('password')" feedback="false"></p-password>
-             @if(isInvalid('password')){
-                @if (loginForm.get('password')?.errors?.['required'])
-                {
-                    <p-message severity="error" size="small" variant="simple">Password is required.</p-message>
+    <div class="login-card">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+           
+            <div class="field-group">
+                <label for="email">כתובת אימייל</label>
+                <input pInputText type="email" id="email"
+                       formControlName="email"
+                       placeholder="דוא''ל"
+                       [invalid]="isInvalid('email')" />
+               
+                @if (isInvalid('email')) {
+                    @if (loginForm.get('email')?.errors?.['required']) {
+                        <p-message severity="error" size="small" variant="simple">שדה חובה.</p-message>
+                    }
+                    @if (loginForm.get('email')?.errors?.['email']) {
+                        <p-message severity="error" size="small" variant="simple">נא להזין אימייל תקין.</p-message>
+                    }
                 }
-                @if (loginForm.get('password')?.errors?.['pattern'])
-                {
-                    <p-message severity="error" size="small" variant="simple">Password must contain at least one uppercase letter, one lowercase letter, and one number.</p-message>
-                }
-            }
-        </div>
+            </div>
 
-        <button pButton severity="secondary" type="submit"><span pButtonLabel>Login</span></button>
-    </form>
+            <div class="field-group">
+                <label for="password">סיסמה</label>
+                <p-password id="password"
+                            formControlName="password"
+                            [toggleMask]="true"
+                            [invalid]="isInvalid('password')"
+                            [feedback]="false"
+                            placeholder="סיסמה">
+                </p-password>
+               
+                @if (isInvalid('password')) {
+                    @if (loginForm.get('password')?.errors?.['required']) {
+                        <p-message severity="error" size="small" variant="simple">שדה חובה.</p-message>
+                    }
+                    @if (loginForm.get('password')?.errors?.['minlength'] || loginForm.get('password')?.errors?.['maxlength']) {
+                        <p-message severity="error" size="small" variant="simple">הסיסמה חייבת להיות בין 7-15 תווים.</p-message>
+                    }
+                    @if (loginForm.get('password')?.errors?.['pattern']) {
+                        <p-message severity="error" size="small" variant="simple">נדרש שילוב של אות גדולה, אות קטנה ומספר.</p-message>
+                    }
+                }
+            </div>
+
+            <button pButton type="submit" label="התחברות" class="custom-btn"></button>
+           
+        </form>
+    </div>
 </div>

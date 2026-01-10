@@ -12,6 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    providePrimeNG({ theme:{preset:Aura} } )
+    providePrimeNG({ theme:{preset:Aura,options:{darkModeSelector:false}} } )
   ]
 };

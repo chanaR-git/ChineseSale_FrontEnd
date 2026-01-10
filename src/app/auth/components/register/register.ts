@@ -14,6 +14,7 @@ import { CreateUserModel } from '../../models/CreateUser.model';
 @Component({
     selector: 'app-register',
     templateUrl: './register.html',
+    styleUrl:'./register.scss',
     standalone: true,
     imports: [ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule, MessageModule,PasswordModule,InputMask],
     providers: [MessageService]
@@ -49,17 +50,21 @@ export class Register {
             };
             this.authService.register(newUser).subscribe({
                 next: (response) => {
-                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registration Successful', life: 3000 });
+                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'הצטרפת בהצלחה!', life: 3000 });
                     this.registerForm.reset();
                     this.formSubmitted = false;
                 },
                 error: (error) => {
-                    this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message || 'Registration Failed', life: 3000 });
+                    this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message || 'הרשמה נכשלה', life: 3000 });
                     console.log(error);
                 }
             });
+        }
+        else
+            this.messageService.add({severity: 'error', summary: 'Error', detail:'אופססס, יש שדה שלא עומד בכללים:(', life: 3000 })
+        
     }
-}
+
 
     isInvalid(controlName: string) {
         const control = this.registerForm.get(controlName);

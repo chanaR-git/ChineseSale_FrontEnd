@@ -37,18 +37,19 @@ export class Login {
             const loginData: LoginModel = this.loginForm.value;
             this.authservice.login(loginData).subscribe({
                 next: (response) => {
-                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful', life: 3000 });
+                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'ברוך הבא:)', life: 3000 });
                     this.loginForm.reset();
                     this.formSubmitted = false;
                     console.log(response.token);
                 },
                 error: (error) => {
-                    this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message || 'Login failed', life: 3000 });
+                    this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message || 'משהו השתבש:(', life: 3000 });
                     console.log(error);
                 }
             });
-        } else {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields correctly.', life: 3000 });
+        } 
+        else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'אופססס, יש שדה שלא עומד בכללים:(', life: 3000 });
         }
     }
 
