@@ -10,6 +10,7 @@ import { InputMask } from 'primeng/inputmask';
 import { maxLength } from '@angular/forms/signals';
 import { AuthService } from '../../services/auth.service';
 import { CreateUserModel } from '../../models/CreateUser.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-register',
@@ -22,6 +23,7 @@ import { CreateUserModel } from '../../models/CreateUser.model';
 export class Register {
     messageService = inject(MessageService);
     authService = inject(AuthService)
+    router = inject(Router);
 
      fb = inject(FormBuilder);
 
@@ -53,6 +55,7 @@ export class Register {
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'הצטרפת בהצלחה!', life: 3000 });
                     this.registerForm.reset();
                     this.formSubmitted = false;
+                    this.router.navigate(['login']);
                 },
                 error: (error) => {
                     this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message || 'הרשמה נכשלה', life: 3000 });
