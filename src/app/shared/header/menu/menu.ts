@@ -18,9 +18,7 @@ export class Menu implements OnInit {
     
     items: MenuItem[] = [];
 
-    private setItems(){
-      console.log("role:"+this.role);
-      
+    private setItems(){      
       this.items  = [
       {
           label:this.loggedIn ? 'התנתקות' : 'התחברות',
