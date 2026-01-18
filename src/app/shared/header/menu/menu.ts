@@ -55,7 +55,10 @@ export class Menu implements OnInit {
             },
             {
                 label: 'תורמים',
-                  icon: 'pi pi-building-columns'
+                icon: 'pi pi-building-columns',
+                command:()=>{
+                  this.router.navigate(['management/donors'])
+                } 
               },
               {
                   label: 'רכישות',
