@@ -74,8 +74,10 @@ export class Menu implements OnInit {
         this.authService.loggedIn$.subscribe((loggedIn) => {
           this.loggedIn = loggedIn;
           
+          
           this.authService.role$.subscribe((role) => {
             this.role = role;
+            this.setItems();
           });
 
           this.setItems();
