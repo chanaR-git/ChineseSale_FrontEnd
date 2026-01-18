@@ -15,6 +15,5 @@ export const routes: Routes = [
             {path:'addGift', component:AddGift}
         ]
     },
-    {path: '**', component:NotFound }
-    
+    {path: '**', component:NotFound } 
 ];

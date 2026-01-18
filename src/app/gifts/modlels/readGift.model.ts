@@ -1,6 +1,3 @@
-// ============================
-// Model לקריאה (GET)
-// ============================
 export interface ReadGiftModel {
   name: string;
   description: string;

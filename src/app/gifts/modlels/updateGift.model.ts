@@ -1,6 +1,3 @@
-// ============================
-// Model לעדכון (PUT / PATCH)
-// ============================
 export interface UpdateGiftModel {
   name?: string;
   description?: string;

@@ -1,6 +1,3 @@
-// ============================
-// Model ליצירה (POST)
-// ============================
 export interface CreateGiftModel {
   name: string;
   description: string;
