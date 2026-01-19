@@ -6,6 +6,7 @@ import { NotFound } from './generalComponents/not-found/not-found';
 import { ManagementWrapper } from './management-wrapper/management-wrapper';
 import { AddGift } from './gifts/components/add-gift/add-gift';
 import { ManageDonors } from './donors/components/manage-donors/manage-donors';
+import { ManageGifts } from './gifts/components/manage-gifts/manage-gifts';
 
 export const routes: Routes = [
     {path:'' , redirectTo: 'login', pathMatch: 'full'},
@@ -13,7 +14,7 @@ export const routes: Routes = [
     {path :'login', component: Login},
     {path:'management',component:ManagementWrapper,
         children:[
-            {path:'addGift', component:AddGift},
+            {path:'gifts', component:ManageGifts},
             {path:'donors',component:ManageDonors}
         ]
     },

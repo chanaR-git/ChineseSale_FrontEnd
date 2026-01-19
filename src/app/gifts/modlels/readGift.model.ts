@@ -1,4 +1,5 @@
 export interface ReadGiftModel {
+  id: number;
   name: string;
   description: string;
   categoryName: string;
