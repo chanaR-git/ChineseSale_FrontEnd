@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    providePrimeNG({ theme:{preset:Aura,options:{darkModeSelector:false}} } )
+    providePrimeNG({ 
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: 'false'
+        }
+      },
+      ripple: true
+    })
   ]
 };
