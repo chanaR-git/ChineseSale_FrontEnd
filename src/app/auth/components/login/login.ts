@@ -13,6 +13,7 @@ import { LoginModel } from '../../models/Login.model';
 
 @Component({
     selector: 'app-login',
+    standalone: true,
     imports:[ReactiveFormsModule, ButtonModule,CommonModule, ToastModule,MessageModule,PasswordModule,InputText],
     templateUrl: './login.html', 
     styleUrl: './login.scss',  

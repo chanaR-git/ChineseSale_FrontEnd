@@ -15,6 +15,7 @@ import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-manage-donors',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule,

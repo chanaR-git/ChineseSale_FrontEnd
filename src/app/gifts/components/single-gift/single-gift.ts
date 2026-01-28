@@ -1,14 +1,16 @@
 import { ChangeDetectorRef, Component, inject, Input, input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GiftService } from '../../services/gift.service';
-import { ReadGiftModel } from '../../modlels/readGift.model';
+import { ReadGiftModel } from '../../models/readGift.model';
 import { Button } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import {  CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-single-gift',
-  imports: [Button,CommonModule,CardModule],
+  standalone: true,
+  imports: [ProgressSpinnerModule, Button,CommonModule,CardModule],
   templateUrl: './single-gift.html',
   styleUrl: './single-gift.scss',
 })

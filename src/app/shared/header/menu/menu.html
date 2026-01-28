@@ -1,3 +1,11 @@
 <div class="card">
     <p-menubar [model]="items"  />
 </div>
+
+<!-- side bar - basket -->
+<div class="card flex justify-center">
+    <p-drawer header="הסל שלי" [(visible)]="visible" position="left"
+            styleClass="w-full md:w-23rem lg:w-35rem">
+        <app-basket></app-basket>
+</p-drawer>
+</div>

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ReadGiftModel } from '../modlels/readGift.model';
-import { CreateGiftModel } from '../modlels/createGift.model';
-import { UpdateGiftModel } from '../modlels/updateGift.model';
+import { ReadGiftModel } from '../models/readGift.model';
+import { CreateGiftModel } from '../models/createGift.model';
+import { UpdateGiftModel } from '../models/updateGift.model';
 import { environment } from '../../../enviorments/enviorment';
 
 

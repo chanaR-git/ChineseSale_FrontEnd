@@ -9,9 +9,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { GiftService } from '../../services/gift.service';
-import { ReadGiftModel } from '../../modlels/readGift.model';
-import { CreateGiftModel } from '../../modlels/createGift.model';
-import { UpdateGiftModel } from '../../modlels/updateGift.model';
+import { ReadGiftModel } from '../../models/readGift.model';
+import { CreateGiftModel } from '../../models/createGift.model';
+import { UpdateGiftModel } from '../../models/updateGift.model';
 import { DonorService } from '../../../donors/services/donor-service';
 import { ReadDonorModel } from '../../../donors/models/readDonor.model';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -20,6 +20,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @Component({
     selector: 'app-manage-gifts',
+    standalone: true,
     imports: [
         ReactiveFormsModule,
         CommonModule,

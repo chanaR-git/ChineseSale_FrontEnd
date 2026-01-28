@@ -8,6 +8,7 @@ import { Menu } from './shared/header/menu/menu';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterModule, RouterOutlet,Menu],
   templateUrl: './app.html',
   styleUrl: './app.scss'

@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { single } from 'rxjs';
 import { SingleGift } from '../single-gift/single-gift';
 import { GiftService } from '../../services/gift.service';
-import { ReadGiftModel } from '../../modlels/readGift.model';
+import { ReadGiftModel } from '../../models/readGift.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-all-gifts',
+  standalone: true,
   imports: [SingleGift,CommonModule],
   templateUrl: './all-gifts.html',
   styleUrl: './all-gifts.scss',
