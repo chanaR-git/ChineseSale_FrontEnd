@@ -1,0 +1,60 @@
+$ze-purple: #7e2a52;
+$gold: #d4af37;
+
+// מרכוז כל הדף
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    direction: rtl;
+}
+
+// כותרת
+.header-section {
+    text-align: center;
+    margin-bottom: 2rem;
+    h2 { color: $ze-purple; font-size: 2rem; font-weight: bold; }
+    .divider { height: 4px; width: 60px; background: $gold; margin: 8px auto; border-radius: 2px; }
+}
+
+// הכרטיס הלבן
+.login-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-top: 6px solid $ze-purple;
+    width: 100%;
+    max-width: 400px; // זה ימנע מהכפתור להימתח לכל הרוחב
+}
+
+// סידור הטופס בטור - זה הפתרון לבעיה בתמונה!
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; // רווח בין השדות
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    label { color: $ze-purple; font-weight: bold; }
+}
+
+// עיצוב כפתור
+::ng-deep .p-button.custom-btn {
+    background: $ze-purple !important;
+    border: none !important;
+    padding: 0.75rem !important;
+    border-radius: 10px !important;
+    &:hover { background: darken($ze-purple, 10%) !important; }
+}
+
+// תיקון רוחב לסיסמה
+::ng-deep .p-password, ::ng-deep .p-password input {
+    width: 100% !important;
+}
