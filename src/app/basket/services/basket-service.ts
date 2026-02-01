@@ -27,10 +27,7 @@ export class BasketService {
    * POST api/Basket
    */
   addToBasket(model: AddToBasketModel): Observable<ReadBasketModel> {
-    return this.http.post<ReadBasketModel>(
-      this.baseUrl,
-      model
-    );
+    return this.http.post<ReadBasketModel>(this.baseUrl,model);
   }
 
   /**
@@ -45,9 +42,7 @@ export class BasketService {
     //   .set('newAmount', newAmount);
 
     return this.http.put<ReadBasketModel | null>(
-      `${this.baseUrl}/${basketId}/amount`,
-      newAmount
-    );
+      `${this.baseUrl}/${basketId}/amount?newAmount=${newAmount}`,{});
   }
 
   /**

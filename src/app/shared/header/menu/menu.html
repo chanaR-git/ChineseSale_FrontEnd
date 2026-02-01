@@ -4,8 +4,8 @@
 
 <!-- side bar - basket -->
 <div class="card flex justify-center">
-    <p-drawer header="הסל שלי" [(visible)]="visible" position="left"
+    <p-drawer header="הסל שלי" [(visible)]="visible" position="left" (onShow)="openBasket()"
             styleClass="w-full md:w-23rem lg:w-35rem">
-        <app-basket></app-basket>
+        <app-basket #basketRef></app-basket>
 </p-drawer>
 </div>

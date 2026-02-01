@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Menubar, MenubarModule } from 'primeng/menubar';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -14,11 +14,19 @@ import { Basket } from "../../../basket/components/basket/basket";
   styleUrl: './menu.scss',
   standalone: true
 })
+
 export class Menu implements OnInit {
   private authService = inject(AuthService);
   private loggedIn = false;
   private role = this.authService.getUserRole();
   private router = inject(Router);
+  private showBasket = false;
+  @ViewChild('basketRef') 
+  private basketRef?: Basket;
+
+  openBasket() {
+    this.basketRef?.loadBasket();
+  }
 
   visible: boolean = false;
   items: MenuItem[] = [];

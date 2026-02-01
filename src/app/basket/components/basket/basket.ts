@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { ReadBasketModel } from '../../models/readBasket.model';
@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Basket implements OnInit {
   private basketService = inject(BasketService);
+  private cdr = inject(ChangeDetectorRef);
   basketItems: ReadBasketModel[] = [];
   loading: boolean = false;
 
@@ -27,11 +28,9 @@ export class Basket implements OnInit {
   loadBasket(): void {
     this.loading = true;
     this.basketService.getMyBasket().subscribe({
-      
       next: (items) => {
-        console.log(items);
-        
         this.basketItems = items;
+        this.cdr.detectChanges();
         this.loading = false;
       },
       error: () => {this.loading = false;console.log("error");
@@ -41,14 +40,15 @@ export class Basket implements OnInit {
 
   updateAmount(item: ReadBasketModel, delta: number): void {
     const newAmount = item.amount + delta;
+    
     if (newAmount < 0) return;
 
     // שימוש בפונקציית העדכון מהסרוויס שסיפקת
     this.basketService.updateBasketAmount(item.id, newAmount).subscribe((updated) => {
-      if (updated) {
+      if (updated) {        
         item.amount = updated.amount;
-        console.log(("updated"));
-        
+        console.log(("updated " + item.amount));
+        this.cdr.detectChanges();
       }
     });
   }
@@ -57,6 +57,7 @@ export class Basket implements OnInit {
     // שימוש בפונקציית המחיקה מהסרוויס שסיפקת
     this.basketService.deleteBasket(id).subscribe(() => {
       this.basketItems = this.basketItems.filter(item => item.id !== id);
+      this.cdr.detectChanges();
     });
   }
 
