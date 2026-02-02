@@ -6,6 +6,6 @@
 <div class="card flex justify-center">
     <p-drawer header="הסל שלי" [(visible)]="visible" position="left" (onShow)="openBasket()"
             styleClass="w-full md:w-23rem lg:w-35rem">
-        <app-basket #basketRef></app-basket>
+        <app-basket #basketRef (onClose)="visible = false"></app-basket>
 </p-drawer>
 </div>

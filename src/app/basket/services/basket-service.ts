@@ -54,4 +54,11 @@ export class BasketService {
       `${this.baseUrl}/${basketId}`
     );
   }
+
+    /**
+   * POST api/Basket/buy-all
+   */
+  buyAll(): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}/buy-all`,{});
+  }
 }

@@ -1,113 +1,77 @@
-<div
-  class="flex justify-content-center align-items-start p-3"
-  [class]="isFullPage ? 'surface-ground min-h-[calc(100vh-10rem)]' : 'h-full'"
->
-  <p-card
-    *ngIf="gift; else loading"
-    styleClass="
+<div class="flex justify-content-center align-items-start p-3"
+    [class]="isFullPage ? 'surface-ground min-h-[calc(100vh-10rem)]' : 'h-full'">
+    <p-card *ngIf="gift; else loading" styleClass="
       shadow-2 hover:shadow-5 transition-all
       border-round-xl overflow-hidden
       w-full max-w-30rem
       flex flex-column
-    "
-    [ngClass]="{ 'single-gift-full': isFullPage }"
-  >
+    " [ngClass]="{ 'single-gift-full': isFullPage }">
 
-    <!-- HEADER / IMAGE -->
-    <ng-template pTemplate="header">
-      <div class="relative overflow-hidden aspect-video flex-shrink-0">
-        <img
-          src="/{{ gift.imagePath }}"
-          [alt]="gift.name"
-          class="w-full h-full object-cover shadow-2"
-        />
-      </div>
-    </ng-template>
+        <!-- HEADER / IMAGE -->
+        <ng-template pTemplate="header">
+            <div class="relative overflow-hidden aspect-video flex-shrink-0">
+                <img src="/{{ gift.imagePath }}" [alt]="gift.name" class="w-full h-full object-cover shadow-2" />
+            </div>
+        </ng-template>
 
-    <!-- BODY -->
-    <div class="flex flex-column flex-1 gap-2 pt-2 text-center">
+        <!-- BODY -->
+        <div class="flex flex-column flex-1 gap-2 pt-2 text-center">
 
-      <!-- NAME -->
-      <div class="text-xl font-bold text-primary mb-2 h-3rem overflow-hidden">
-        <a *ngIf="!isFullPage" [routerLink]="['/gifts', gift.name]">
-          {{ gift.name }}
-        </a>
-        <span *ngIf="isFullPage">{{ gift.name }}</span>
-      </div>
+            <!-- NAME -->
+            <div class="text-xl font-bold text-primary mb-2 h-3rem overflow-hidden">
+                <a *ngIf="!isFullPage" [routerLink]="['/gifts', gift.name]">
+                    {{ gift.name }}
+                </a>
+                <span *ngIf="isFullPage">{{ gift.name }}</span>
+            </div>
 
-      <!-- DESCRIPTION -->
-      <div
-        *ngIf="isFullPage"
-        class="flex flex-column align-items-center justify-content-center px-3 flex-1 overflow-hidden"
-      >
-        <p class="text-600 text-center text-base line-height-3">
-          {{ gift.description }}
-        </p>
-      </div>
+            <!-- DESCRIPTION -->
+            <div *ngIf="isFullPage"
+                class="flex flex-column align-items-center justify-content-center px-3 flex-1 overflow-hidden">
+                <p class="text-600 text-center text-base line-height-3">
+                    {{ gift.description }}
+                </p>
+            </div>
 
-      <!-- PRICE -->
-      <div
-        class="flex flex-column align-items-center justify-content-center
-               mt-auto pt-3 border-top-1 border-100 surface-50 border-round"
-      >
-        <span class="text-sm text-500 font-medium mb-1">
-          כרטיס להגרלה ב-
-        </span>
-        <span
-          [class]="isFullPage ? 'text-5xl font-bold' : 'text-3xl font-bold'"
-          style="color: #d4af37;"
-        >
-          {{ gift.price | currency:'ILS':'symbol':'1.0-0' }}
-        </span>
-      </div>
+            <!-- PRICE -->
+            <div class="flex flex-column align-items-center justify-content-center
+               mt-auto pt-3 border-top-1 border-100 surface-50 border-round">
+                <span class="text-sm text-500 font-medium mb-1">
+                    כרטיס להגרלה ב-
+                </span>
+                <span [class]="isFullPage ? 'text-5xl font-bold' : 'text-3xl font-bold'" style="color: #d4af37;">
+                    {{ gift.price | currency:'ILS':'symbol':'1.0-0' }}
+                </span>
+            </div>
 
-      <!-- ACTIONS -->
-      <div class="flex gap-2 mt-3 justify-content-center">
-        <p-button
-          *ngIf="hasBasket"
-          label="הוספה לסל"
-          icon="pi pi-shopping-cart"
-          [styleClass]="'w-full border-round-lg ' + (isFullPage ? 'p-button-lg' : '')"
-          (onClick)="addToCart(gift)"
-        >
-        </p-button>
+            <!-- ACTIONS -->
+            <div class="flex gap-2 mt-3 justify-content-center">
+                <p-button *ngIf="hasBasket" label="הוספה לסל" icon="pi pi-shopping-cart"
+                    [styleClass]="'w-full border-round-lg ' + (isFullPage ? 'p-button-lg' : '')"
+                    (onClick)="addToCart(gift)">
+                </p-button>
 
-        <p-button
-          icon="pi pi-heart"
-          [outlined]="true"
-          styleClass="border-round-lg"
-        >
-        </p-button>
-      </div>
+                <p-button icon="pi pi-heart" [outlined]="true" styleClass="border-round-lg">
+                </p-button>
+            </div>
 
-      <!-- BACK -->
-      <p-button
-        *ngIf="isFullPage"
-        label="חזרה לכל המתנות"
-        icon="pi pi-arrow-right"
-        [link]="true"
-        routerLink="/gifts"
-        styleClass="mt-2 text-sm"
-      >
-      </p-button>
+            <!-- BACK -->
+            <p-button *ngIf="isFullPage" label="חזרה לכל המתנות" icon="pi pi-arrow-right" [link]="true"
+                routerLink="/gifts" styleClass="mt-2 text-sm">
+            </p-button>
 
-    </div>
-  </p-card>
+        </div>
+    </p-card>
 </div>
 
 <!-- LOADING -->
 <ng-template #loading>
-  <div
-    class="flex flex-column align-items-center justify-content-center
+    <div class="flex flex-column align-items-center justify-content-center
            p-8 surface-card border-round-xl shadow-1
-           min-h-[calc(100vh-10rem)]"
-  >
-    <p-progressSpinner
-      styleClass="w-3rem h-3rem"
-      strokeWidth="4"
-    ></p-progressSpinner>
-    <span class="mt-3 text-600 font-medium italic">
-      טוען נתונים...
-    </span>
-  </div>
+           min-h-[calc(100vh-10rem)]">
+        <p-progressSpinner styleClass="w-3rem h-3rem" strokeWidth="4"></p-progressSpinner>
+        <span class="mt-3 text-600 font-medium italic">
+            טוען נתונים...
+        </span>
+    </div>
 </ng-template>

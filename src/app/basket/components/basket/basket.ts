@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-basket',
@@ -20,6 +21,8 @@ export class Basket implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   basketItems: ReadBasketModel[] = [];
   loading: boolean = false;
+  router = inject(Router);
+  @Output() onClose = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.loadBasket();
@@ -61,5 +64,14 @@ export class Basket implements OnInit {
 
   get totalSum(): number {
     return this.basketItems.reduce((acc, item) => acc + (item.gift.price * item.amount), 0);
+  }
+
+  buyAll(): void {
+    this.basketService.buyAll().subscribe(() => {
+      this.basketItems = [];
+      this.cdr.markForCheck();
+      this.onClose.emit();
+      this.router.navigate(['/purchase/success']);
+    });
   }
 }
