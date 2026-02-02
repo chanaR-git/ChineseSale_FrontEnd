@@ -24,11 +24,13 @@ export class SingleGift {
   private giftService = inject(GiftService);
   private basketService = inject(BasketService);
   hasBasket : boolean = !this.authService.isAdmin();
+  isFullPage: boolean = false;
 
   @Input() gift:ReadGiftModel | null = null;
 
   // name: string  = this.gift?.name ?? ''
   ngOnInit() {
+    this.isFullPage=false;
     if(!this.gift){
       const giftName = this.route.snapshot.paramMap.get('name');
       
@@ -37,6 +39,7 @@ export class SingleGift {
         return;
       }
 
+      this.isFullPage = true;
       this.giftService.getGiftByName(giftName ).subscribe({
         next:(gift)=>{
           this.gift = gift;
