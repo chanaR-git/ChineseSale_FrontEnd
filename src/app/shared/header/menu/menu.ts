@@ -92,7 +92,10 @@ export class Menu implements OnInit {
               },
               {
                 label: 'רכישות',
-                icon: 'pi pi-wallet'
+                icon: 'pi pi-wallet',
+                command: () => {
+                  this.router.navigate(['management/purchases'])
+                }
               },
               {
                 label: 'הגרלה',
