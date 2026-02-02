@@ -10,7 +10,8 @@
 
     <div class="flex flex-column gap-2 pt-2 text-center">
         <div class="text-xl font-bold text-primary mb-2 h-3rem overflow-hidden">
-            {{ gift.name }}
+            <a [routerLink]="['/gifts', gift.name]">{{ gift.name }}</a>
+            
         </div>
         
         <div class="flex flex-column align-items-center justify-content-center mt-auto pt-3 border-top-1 border-100">
@@ -21,7 +22,7 @@
         </div>
 
         <div class="flex gap-2 mt-3 justify-content-center">
-            <p-button label="הוספה לסל" 
+            <p-button *ngIf="hasBasket" label="הוספה לסל" 
                       icon="pi pi-shopping-cart" 
                       styleClass="w-full border-round-lg"
                       (onClick)="addToCart(gift)">

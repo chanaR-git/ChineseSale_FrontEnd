@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ReadBasketModel } from '../models/readBasket.model';
 import { AddToBasketModel } from '../models/addToBasket.model';
 import { environment } from '../../../enviorments/enviorment';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root'

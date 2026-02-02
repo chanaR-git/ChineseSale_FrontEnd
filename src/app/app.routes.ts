@@ -13,12 +13,8 @@ export const routes: Routes = [
     {path:'' , redirectTo: 'login', pathMatch: 'full'},
     {path :'register', component: Register},
     {path :'login', component: Login},
-    {path:'gifts',component:AllGifts, 
-        children:
-        [
-            {path:':name',component:SingleGift}
-        ]
-    },
+    {path:'gifts',component:AllGifts},
+    {path:'gifts/:name',component:SingleGift},
     {path:'management',component:ManagementWrapper,
         children:[
             {path:'gifts', component:ManageGifts},

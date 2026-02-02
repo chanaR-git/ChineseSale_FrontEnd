@@ -21,7 +21,7 @@ export class Menu implements OnInit {
   private role = this.authService.getUserRole();
   private router = inject(Router);
   private showBasket = false;
-  @ViewChild('basketRef') 
+  @ViewChild('basketRef')
   private basketRef?: Basket;
 
   openBasket() {
@@ -57,16 +57,18 @@ export class Menu implements OnInit {
     ]
 
 
-    if (this.loggedIn) 
-    {
-      this.items.push(
-        {
-          label: 'הסל שלי',
-          icon: 'pi pi-shopping-cart',
-          command: () => {
-            this.visible=true;
-          }
-        });
+    if (this.loggedIn) {
+      console.log(this.role);
+      
+      if (this.role === 'User') {
+        this.items.push(
+          {
+            label: 'הסל שלי',
+            icon: 'pi pi-shopping-cart',
+            command: () => {
+              this.visible = true;
+            }
+          });}
 
       if (this.authService.isAdmin()) {
         this.items.push(

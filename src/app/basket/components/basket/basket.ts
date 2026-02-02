@@ -43,7 +43,6 @@ export class Basket implements OnInit {
     
     if (newAmount < 0) return;
 
-    // שימוש בפונקציית העדכון מהסרוויס שסיפקת
     this.basketService.updateBasketAmount(item.id, newAmount).subscribe((updated) => {
       if (updated) {        
         item.amount = updated.amount;
@@ -54,7 +53,6 @@ export class Basket implements OnInit {
   }
 
   removeItem(id: number): void {
-    // שימוש בפונקציית המחיקה מהסרוויס שסיפקת
     this.basketService.deleteBasket(id).subscribe(() => {
       this.basketItems = this.basketItems.filter(item => item.id !== id);
       this.cdr.detectChanges();
