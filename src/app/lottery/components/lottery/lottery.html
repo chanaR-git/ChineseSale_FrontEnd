@@ -1,0 +1,31 @@
+<p>lottery works!</p>
+<div class="container">
+  <h2>ניהול הגרלות</h2>
+
+  <div class="actions">
+    <button (click)="onRunLottery()" [disabled]="isLoading">
+      {{ isLoading ? 'מריץ הגרלה...' : 'הפעל הגרלה כללית' }}
+    </button>
+    
+    <button (click)="onDownloadZip()" [disabled]="winners.length === 0">
+      הורד רשימת זוכים (ZIP)
+    </button>
+  </div>
+
+  <table *ngIf="winners.length > 0">
+    <thead>
+      <tr>
+        <th>שם המתנה</th>
+        <th>שם הזוכה</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let winner of winners">
+        <td>{{ winner.giftName }}</td>
+        <td>{{ winner.winnerName }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="winners.length === 0">טרם נקבעו זוכים.</p>
+</div>

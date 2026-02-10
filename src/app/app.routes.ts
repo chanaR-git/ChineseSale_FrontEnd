@@ -10,6 +10,7 @@ import { SingleGift } from './gifts/components/single-gift/single-gift';
 import { AllGifts } from './gifts/components/all-gifts/all-gifts';
 import { Success } from './basket/components/success/success';
 import { ManagePurchases } from './purchases/components/manage-purchases/manage-purchases';
+import { Lottery } from './lottery/components/lottery/lottery';
 
 export const routes: Routes = [
     {path:'' , redirectTo: 'login', pathMatch: 'full'},
@@ -22,7 +23,8 @@ export const routes: Routes = [
         children:[
             {path:'gifts', component:ManageGifts},
             {path:'donors',component:ManageDonors},
-            {path:'purchases',component:ManagePurchases}
+            {path:'purchases',component:ManagePurchases},
+            {path:'lottery', component:Lottery}
         ]
     },
     {path: '**', component:NotFound } 

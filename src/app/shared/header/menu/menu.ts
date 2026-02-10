@@ -99,7 +99,10 @@ export class Menu implements OnInit {
               },
               {
                 label: 'הגרלה',
-                icon: 'pi pi-sparkles'
+                icon: 'pi pi-sparkles',
+                command: () => {
+                  this.router.navigate(['management/lottery'])
+                }
               }
             ]
           });
