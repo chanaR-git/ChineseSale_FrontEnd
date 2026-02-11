@@ -4,17 +4,18 @@ import { Observable } from 'rxjs';
 import { CreateCategoryModel } from '../models/createCategory.model';
 import { ReadCategoryModel } from '../models/readCategory.model';
 import { UpdateCategoryModel } from '../models/updateCategory.model';
+import { environment } from '../../../enviorments/enviorment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  // יש לשנות את ה-URL בהתאם לכתובת השרת שלך
-  private apiUrl = 'api/Category'; 
+
+  private apiUrl = `${environment.apiUrl}/api/Category`; 
 
   constructor(private http: HttpClient) { }
 
-  // GET: получения всех категорий
+  // GET: קבלת כל הקטגוריות
   getAllCategories(): Observable<ReadCategoryModel[]> {
     return this.http.get<ReadCategoryModel[]>(this.apiUrl);
   }
