@@ -15,6 +15,8 @@ import { UpdateGiftModel } from '../../models/updateGift.model';
 import { DonorService } from '../../../donors/services/donor-service';
 import { ReadDonorModel } from '../../../donors/models/readDonor.model';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CategoryService } from '../../../categories/service/category-service';
+import { ReadCategoryModel } from '../../../categories/models/readCategory.model';
 
 
 
@@ -65,9 +67,17 @@ export class ManageGifts implements OnInit {
     donorDisplayControl = new FormControl<ReadDonorModel | null>(null);
 
 
+    //categories
+    categoryService = inject(CategoryService);
+    categories: ReadCategoryModel[] = [];
+    filteredCategories: any[] = [];
+    selectedCategory: ReadCategoryModel | null = null;
+    categoryDisplayControl = new FormControl<ReadCategoryModel | null>(null);
+
     ngOnInit() {
         this.loadGifts();
         this.loadDonors();
+        this.loadCategories();
         this.initForms();
     }
 
@@ -134,11 +144,14 @@ export class ManageGifts implements OnInit {
                 price: gift.price,
                 imagePath: gift.imagePath
             });
-            this.op.show(event);
+        this.categoryDisplayControl.setValue(this.categories.find(cat => cat.id === gift.categoryId) || null)
+
+        this.op.show(event);
             
-            if (this.op.container) {
-                this.op.align();
-            }
+        if (this.op.container) {
+            this.op.align();
+        }
+        
         }
     }
     
@@ -241,8 +254,6 @@ export class ManageGifts implements OnInit {
 
     
     //donors
-    //find the way to show the selected donor name in the autocomplete input after selection
-
     private loadDonors() {
         this.donorService.getDonors().subscribe(d => {
             this.donors = d;
@@ -262,7 +273,24 @@ export class ManageGifts implements OnInit {
     }
 
     //categories
-    //create categoey models, service and load categories method filterCategories(event: any)  and onCategorySelect
+    private loadCategories() {
+        this.categoryService.getAllCategories().subscribe(c => {
+            this.categories = c;
+            this.cdr.markForCheck();
+        });
+    }
+
+    filterCategories(event: any) {
+        const query = event.query.toLowerCase();
+        this.filteredCategories = this.categories.filter(category => category.name.toLowerCase().includes(query));
+    }
+
+    onCategorySelect(event: any) {
+        const category: ReadCategoryModel = event.value;
+        this.selectedCategory = category;
+        this.addGiftForm.patchValue({ categoryId: category.id });
+    }
+    
 
 
 

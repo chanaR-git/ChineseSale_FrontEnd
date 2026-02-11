@@ -64,8 +64,15 @@
 
                 <div>
                     <label class="block text-sm font-semibold mb-1">קטגוריה *</label>
-                    <input pInputText type="text" formControlName="categoryId" class="w-full" placeholder="הכנס קטגוריה"
-                        maxlength="10" />
+                    <div class="card flex justify-center">
+                        <p-autocomplete  [formControl]="categoryDisplayControl" [dropdown]="true" field="name" optionLabel="name" 
+                        [suggestions]="filteredCategories" (completeMethod)="filterCategories($event)" (onSelect)="onCategorySelect($event)" >
+                            <ng-template let-category pTemplate="item">
+                               {{ category.name }}
+                            </ng-template>
+                         
+                        </p-autocomplete>
+                    </div>
                     <small class="text-red-500"
                         *ngIf="addGiftForm.get('categoryId')?.invalid && addGiftForm.get('categoryId')?.touched">
                         קטגוריה היא שדה חובה
@@ -145,8 +152,15 @@
 
                 <div>
                     <label class="block text-sm font-semibold mb-1">קטגוריה *</label>
-                    <input pInputText type="text" formControlName="categoryId" class="w-full"
-                        [value]="selectedGift.categoryId" maxlength="10" />
+                    <div class="card flex justify-center">
+                        <p-autocomplete  [formControl]="categoryDisplayControl" [dropdown]="true" field="name" optionLabel="name"
+                        [suggestions]="filteredCategories" (completeMethod)="filterCategories($event)" (onSelect)="onCategorySelect($event)" >
+                            <ng-template let-category pTemplate="item">
+                               {{ category.name }}
+                            </ng-template>
+                         
+                        </p-autocomplete>
+                    </div>
                     <small class="text-red-500"
                         *ngIf="updateGiftForm.get('categoryId')?.invalid && updateGiftForm.get('categoryId')?.touched">
                         קטגוריה היא שדה חובה

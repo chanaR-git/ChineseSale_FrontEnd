@@ -34,7 +34,6 @@ export class Lottery implements OnInit {
           {       
             winners.forEach(w => this.winners.push(`${w.giftName} - ${w.winnerName} (${w.winnerEmail})`));
             this.afterLottery = true;
-
           }   
            this.cdr.detectChanges();
         },
