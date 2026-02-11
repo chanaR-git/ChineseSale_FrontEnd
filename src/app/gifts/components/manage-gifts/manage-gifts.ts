@@ -17,6 +17,7 @@ import { ReadDonorModel } from '../../../donors/models/readDonor.model';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CategoryService } from '../../../categories/service/category-service';
 import { ReadCategoryModel } from '../../../categories/models/readCategory.model';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 
@@ -52,7 +53,8 @@ export class ManageGifts implements OnInit {
     @ViewChild('addGiftPopover') addGiftPopover!: Popover;
 
     gifts: ReadGiftModel[] = [];
-    
+
+    searchForm!: FormGroup;
     giftForm!: FormGroup;
     addGiftForm!: FormGroup;
     updateGiftForm!: FormGroup;
@@ -79,9 +81,10 @@ export class ManageGifts implements OnInit {
         this.loadDonors();
         this.loadCategories();
         this.initForms();
+        this.setupSearchSubscription();
     }
 
-    private loadGifts() {
+    loadGifts() {
         this.giftService.getGifts().subscribe(
             (gifts) => {
                 this.gifts = gifts;
@@ -113,6 +116,48 @@ export class ManageGifts implements OnInit {
             price: [10, [Validators.min(10), Validators.max(1000)]],
             imagePath: ['', Validators.maxLength(200)],
         });
+        this.searchForm = this.fb.group({
+            name: [''],
+            donor: [null],
+            minBuyers: [null]
+        });
+    }
+
+    // filters:
+
+    setupSearchSubscription() {
+        this.searchForm.valueChanges.pipe(
+            debounceTime(400),
+            distinctUntilChanged()
+        ).subscribe(filters => {
+            this.applyFilters(filters);
+        });
+    }
+    applyFilters(filters: any) {
+        // 1. סינון לפי שם (אם הוזן)
+        if (filters.name) {
+            this.giftService.getGiftByName(filters.name).subscribe(
+                res => this.gifts = res ? [res] : [],
+                err => {this.gifts = [];console.log(err); }
+            );
+        } 
+        // 2. סינון לפי תורם (אם נבחר אובייקט תורם)
+        else if (filters.donor && filters.donor.name) {
+            this.giftService.getGiftsByDonor(filters.donor.name).subscribe(res => this.gifts = res);
+        }
+        // 3. סינון לפי מספר רוכשים
+        else if (filters.minBuyers !== null && filters.minBuyers !== '') {
+            this.giftService.getGiftsByNumberOfBuyers(filters.minBuyers).subscribe(res => this.gifts = res);
+        }
+        // אם הכל ריק - טען הכל
+        else {
+            this.loadGifts();
+        }
+    }
+
+    resetFilters() {
+        this.searchForm.reset();
+        this.loadGifts();
     }
     
     hidePopover() {
@@ -151,7 +196,7 @@ export class ManageGifts implements OnInit {
         if (this.op.container) {
             this.op.align();
         }
-        
+
         }
     }
     
@@ -254,7 +299,7 @@ export class ManageGifts implements OnInit {
 
     
     //donors
-    private loadDonors() {
+    loadDonors() {
         this.donorService.getDonors().subscribe(d => {
             this.donors = d;
             this.cdr.markForCheck();
@@ -273,7 +318,7 @@ export class ManageGifts implements OnInit {
     }
 
     //categories
-    private loadCategories() {
+    loadCategories() {
         this.categoryService.getAllCategories().subscribe(c => {
             this.categories = c;
             this.cdr.markForCheck();
@@ -290,11 +335,4 @@ export class ManageGifts implements OnInit {
         this.selectedCategory = category;
         this.addGiftForm.patchValue({ categoryId: category.id });
     }
-    
-
-
-
-
-
-
 }
