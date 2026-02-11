@@ -118,6 +118,7 @@ export class ManageGifts implements OnInit {
         this.showAddForm = false;
         this.addGiftPopover.hide();
         this.addGiftForm.reset();
+        this.donorDisplayControl.reset();
     }
     
     displayGift(event: Event, gift: ReadGiftModel) {
@@ -258,7 +259,6 @@ export class ManageGifts implements OnInit {
         const donor: ReadDonorModel = event.value;
         this.selectedDonor = donor;
         this.addGiftForm.patchValue({ donorId: donor.id });
-        this.donorDisplayControl.setValue(event); 
     }
 
     //categories

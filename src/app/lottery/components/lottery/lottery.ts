@@ -1,58 +1,93 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { LotteryService } from '../../services/lottery.service';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LotteryService } from '../../services/lottery.service';
+
+
 @Component({
   selector: 'app-lottery',
-  imports:[CommonModule],
+  imports: [CommonModule],
   templateUrl: './lottery.html',
-  styleUrls: ['./lottery.scss']
+  styleUrl: './lottery.scss',
 })
 export class Lottery implements OnInit {
-  winners: any[] = [];
-  isLoading = false;
+  lotteryService = inject(LotteryService);
+  afterLottery = false;
+  beforeLottery = true;
+  message = '';
+  winners:string[]=[];
+  cdr = inject(ChangeDetectorRef);
 
-  private lotteryService = inject(LotteryService);
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.message = 'טוען זוכים...';
     this.loadWinners();
   }
 
-  // שימוש ב-getAllGiftWinners לטעינת הרשימה מהשרת
   loadWinners() {
-    this.lotteryService.getAllGiftWinners().subscribe({
-      next: (data) => this.winners = data,
-      error: (err) => console.error('שגיאה בטעינת הזוכים', err)
-    });
+      this.lotteryService.getAllGiftWinners().subscribe({
+        next: (winners) => {
+          if (winners.length === 0) {
+            this.message = 'טרם הוגרלו זוכים';
+            this.afterLottery = false;
+            this.winners = [];
+          } 
+          else 
+          {       
+            winners.forEach(w => this.winners.push(`${w.giftName} - ${w.winnerName} (${w.winnerEmail})`));
+            this.afterLottery = true;
+
+          }   
+           this.cdr.detectChanges();
+        },
+        error: (err) => {
+          this.message = 'שגיאה בטעינת זוכים';
+          console.error('Error loading winners:', err);
+           this.cdr.detectChanges();
+        }
+      });
+  } 
+  // הרצת הגרלה לכל המתנות
+  runAllLotteries() {
+    if (confirm('האם אתה בטוח שברצונך להגריל את כל המתנות שטרם הוגרלו?')) {
+      this.lotteryService.runLottery().subscribe({
+        next: (res) => {
+          this.message = 'ההגרלה הסתיימה בהצלחה!';
+          this.loadWinners();
+        },
+        error: (err) => {
+          console.error('Server Error:', err.error);
+          this.message = 'שגיאה בהרצת ההגרלה';
+        }
+      });
+    }
   }
 
-  // שימוש ב-runLottery להרצת הגרלה כללית
-  onRunLottery() {
-    this.isLoading = true;
-    this.lotteryService.runLottery().subscribe({
-      next: (res) => {
-        alert('ההגרלה הסתיימה בהצלחה!');
-        this.loadWinners(); // רענון הרשימה לאחר ההגרלה
-        this.isLoading = false;
-      },
-      error: (err) => {
-        alert('שגיאה בהרצת ההגרלה: ' + err.error);
-        this.isLoading = false;
-      }
-    });
-  }
 
-  // שימוש ב-downloadWinnersZip להורדת הקובץ
-  onDownloadZip() {
+  // הורדת דוח זוכים ב-ZIP
+  downloadWinners() {
     this.lotteryService.downloadWinnersZip().subscribe({
-      next: (blob: Blob) => {
+      next: (blob) => {
         const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'winners_list.zip';
-        link.click();
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'winners_report.zip';
+        a.click();
         window.URL.revokeObjectURL(url);
       },
-      error: (err) => alert('שגיאה בהורדת הקובץ')
+      error: (err) => alert('לא נמצאו נתוני זוכים להורדה')
     });
+  }
+
+
+  // איפוס מכירה
+  resetSale() {
+    if (confirm('אזהרה! פעולה זו תמחק את כל הזוכים ותאפס את המכירה. האם להמשיך?')) {
+      this.lotteryService.startNewSale().subscribe({
+        next: (res) => {
+          console.log('המכירה אופסה בהצלחה');
+          this.loadWinners();
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 }

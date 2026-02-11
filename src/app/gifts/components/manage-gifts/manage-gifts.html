@@ -75,8 +75,8 @@
                 <div>
                     <label class="block text-sm font-semibold mb-1">תורם *</label>
                     <div class="card flex justify-center">
-                        <p-autocomplete  [formControl]="donorDisplayControl" [dropdown]="true" field="name"  [suggestions]="filteredDonors"
-                            (completeMethod)="filterDonors($event)" (onSelect)="onDonorSelect($event)" >
+                        <p-autocomplete  [formControl]="donorDisplayControl" [dropdown]="true" field="name" optionLabel="name" 
+                        [suggestions]="filteredDonors" (completeMethod)="filterDonors($event)" (onSelect)="onDonorSelect($event)" >
                             <ng-template let-donor pTemplate="item">
                                {{ donor.name }}
                             </ng-template>
