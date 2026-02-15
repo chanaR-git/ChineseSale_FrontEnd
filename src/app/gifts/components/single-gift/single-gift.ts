@@ -9,6 +9,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BasketService } from '../../../basket/services/basket-service';
 import { AddToBasketModel } from '../../../basket/models/addToBasket.model';
 import { AuthService } from '../../../auth/services/auth.service';
+import { environment } from '../../../../enviorments/enviorment';
 
 @Component({
   selector: 'app-single-gift',
@@ -27,6 +28,7 @@ export class SingleGift {
   isFullPage: boolean = false;
 
   @Input() gift:ReadGiftModel | null = null;
+  apiUrl: string = `${environment.apiUrl}/api/gift`;
 
   ngOnInit() {
     
