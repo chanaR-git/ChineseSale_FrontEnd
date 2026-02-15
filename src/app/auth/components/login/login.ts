@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputMask } from 'primeng/inputmask';
@@ -14,7 +15,7 @@ import { LoginModel } from '../../models/Login.model';
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports:[ReactiveFormsModule, ButtonModule,CommonModule, ToastModule,MessageModule,PasswordModule,InputText],
+    imports:[RouterLink,ReactiveFormsModule, ButtonModule,CommonModule, ToastModule,MessageModule,PasswordModule,InputText],
     templateUrl: './login.html', 
     styleUrl: './login.scss',  
     providers: [MessageService]
