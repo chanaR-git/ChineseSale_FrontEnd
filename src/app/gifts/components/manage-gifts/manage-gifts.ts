@@ -119,7 +119,7 @@ export class ManageGifts implements OnInit {
         this.searchForm = this.fb.group({
             name: [''],
             donor: [null],
-            minBuyers: [null]
+            minBuyers: [0]
         });
     }
 
@@ -127,12 +127,13 @@ export class ManageGifts implements OnInit {
 
     setupSearchSubscription() {
         this.searchForm.valueChanges.pipe(
-            debounceTime(400),
+            debounceTime(100),
             distinctUntilChanged()
         ).subscribe(filters => {
             this.applyFilters(filters);
         });
     }
+
     applyFilters(filters: any) {
         // 1. סינון לפי שם (אם הוזן)
         if (filters.name) {

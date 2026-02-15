@@ -50,4 +50,8 @@ export class GiftService {
   deleteGift(name: string): Observable<ReadGiftModel> {
     return this.http.delete<ReadGiftModel>(`${this.apiUrl}/${name}`);
   }
+
+  getGiftWinner(giftName: string): Observable<{winner:string}> {
+    return this.http.get<{winner:string}>(`${this.apiUrl}/${giftName}/winner`);
+  }
 }

@@ -46,13 +46,20 @@
 
             <!-- ACTIONS -->
             <div class="flex gap-2 mt-3 justify-content-center">
-                <p-button *ngIf="hasBasket" label="הוספה לסל" icon="pi pi-shopping-cart"
+                <p-button *ngIf="hasBasket && winnerName === '' " label="הוספה לסל" icon="pi pi-shopping-cart"
                     [styleClass]="'w-full border-round-lg ' + (isFullPage ? 'p-button-lg' : '')"
                     (onClick)="addToCart(gift)">
                 </p-button>
 
                 <p-button icon="pi pi-heart" [outlined]="true" styleClass="border-round-lg">
                 </p-button>
+            </div>
+
+            <!-- WINNER -->
+            <div *ngIf="winnerName !== ''" class="flex flex-column align-items-center justify-content-center mt-4 p-3 border-round-lg bg-green-50">
+                <span class="text-green-700 text-lg font-semibold">
+                     הזוכה המאושר:  {{ winnerName }}
+                </span>
             </div>
 
             <!-- BACK -->
