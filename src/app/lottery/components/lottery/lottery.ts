@@ -1,11 +1,15 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LotteryService } from '../../services/lottery.service';
+import { RippleModule } from 'primeng/ripple';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import confetti from 'canvas-confetti';
 
 
 @Component({
   selector: 'app-lottery',
-  imports: [CommonModule],
+  imports: [CommonModule,RippleModule,ButtonModule,CardModule],
   templateUrl: './lottery.html',
   styleUrl: './lottery.scss',
 })
@@ -46,11 +50,14 @@ export class Lottery implements OnInit {
   } 
   // הרצת הגרלה לכל המתנות
   runAllLotteries() {
-    if (confirm('האם אתה בטוח שברצונך להגריל את כל המתנות שטרם הוגרלו?')) {
+    if (confirm('האם אתה בטוח שברצונך להגריל את כל המתנות?')) {
       this.lotteryService.runLottery().subscribe({
         next: (res) => {
           this.message = 'ההגרלה הסתיימה בהצלחה!';
           this.loadWinners();
+          
+          // הפעלת קונפטי חגיגי!
+          this.celebrate();
         },
         error: (err) => {
           console.error('Server Error:', err.error);
@@ -58,7 +65,34 @@ export class Lottery implements OnInit {
         }
       });
     }
+
   }
+
+  celebrate() {
+    const duration = 3 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#712059', '#D4AF37', '#F1D382']
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#712059', '#D4AF37', '#F1D382']
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+}
 
 
   // הורדת דוח זוכים ב-ZIP

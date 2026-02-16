@@ -23,10 +23,11 @@ html, body {
 
 :root {
   /* צבעי "זה לזה" שדגמנו מהלוגו */
-  --primary-color: #712059;       /* סגול עמוק - מלכותי ואמין */
-  --primary-hover: #5a1a47;
-  --accent-color: #E98236;        /* כתום-זהב - חם ומניע לפעולה */
-  --accent-hover: #d6712b;
+  --primary-color: #712059;      /* סגול עמוק מהלוגו */
+  --accent-color: #D4AF37;       /* זהב יוקרתי (Metallic Gold) */
+  --accent-hover: #B8860B;       /* זהב כהה יותר לריחוף */
+  --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F1D382 50%, #D4AF37 100%);
+  --border-radius: 20px;
   
   /* צבעי רקע וטקסט לקו נקי */
   --surface-ground: #f8f9fa;      /* רקע אפור בהיר מאוד */
@@ -35,6 +36,17 @@ html, body {
   
   /* רדיוס פינות אחיד למראה מודרני */
   --border-radius: 16px;
+}
+
+
+/* אפקט נצנצים עדין לרקע של כרטיסים חגיגיים */
+.shimmer-effect {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
 }
 
 
