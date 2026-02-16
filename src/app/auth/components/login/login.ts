@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputMask } from 'primeng/inputmask';
@@ -23,7 +23,7 @@ import { LoginModel } from '../../models/Login.model';
 export class Login {
     messageService = inject(MessageService);
     authservice = inject(AuthService);
-
+    router = inject(Router);
     fb = inject(FormBuilder);
 
     loginForm: FormGroup = this.fb.group({
@@ -43,6 +43,9 @@ export class Login {
                     this.loginForm.reset();
                     this.formSubmitted = false;
                     console.log(response.token);
+                    setTimeout(() => {
+                    this.router.navigate(['/gifts']);
+                    }, 1000);
                 },
                 error: (error) => {
                     this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message || 'משהו השתבש:(', life: 3000 });
