@@ -17,3 +17,53 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+/* src/styles.scss */
+
+:root {
+  /* צבעי "זה לזה" שדגמנו מהלוגו */
+  --primary-color: #712059;       /* סגול עמוק - מלכותי ואמין */
+  --primary-hover: #5a1a47;
+  --accent-color: #E98236;        /* כתום-זהב - חם ומניע לפעולה */
+  --accent-hover: #d6712b;
+  
+  /* צבעי רקע וטקסט לקו נקי */
+  --surface-ground: #f8f9fa;      /* רקע אפור בהיר מאוד */
+  --text-color: #2d2d2d;
+  --text-secondary: #6c757d;
+  
+  /* רדיוס פינות אחיד למראה מודרני */
+  --border-radius: 16px;
+}
+
+
+/* עיצוב כפתורי PrimeNG */
+.p-button {
+  border-radius: var(--border-radius) !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease;
+
+  &.p-button-primary {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+
+  &.p-button-secondary {
+    background: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(113, 32, 89, 0.2);
+  }
+}
+
+/* עיצוב כרטיסים (Cards) של המכירה הסינית */
+.p-card {
+  border-radius: var(--border-radius) !important;
+  border: none !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
+  overflow: hidden;
+}
