@@ -18,6 +18,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CategoryService } from '../../../categories/service/category-service';
 import { ReadCategoryModel } from '../../../categories/models/readCategory.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { CardModule } from 'primeng/card';
 
 
 
@@ -34,7 +35,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
         InputTextModule,
         ToastModule,
         AutoCompleteModule,
-        FormsModule
+        FormsModule,
+        CardModule
     ],
     templateUrl: './manage-gifts.html',
     styleUrl: './manage-gifts.scss',
@@ -63,11 +65,10 @@ export class ManageGifts implements OnInit {
 
     //donor
     private donorService = inject(DonorService);
-    donors:ReadDonorModel[]=[];
+    donors: ReadDonorModel[] = [];
     filteredDonors: any[] = [];
     selectedDonor: ReadDonorModel | null = null;
     donorDisplayControl = new FormControl<ReadDonorModel | null>(null);
-
 
     //categories
     categoryService = inject(CategoryService);
@@ -75,7 +76,6 @@ export class ManageGifts implements OnInit {
     filteredCategories: any[] = [];
     selectedCategory: ReadCategoryModel | null = null;
     categoryDisplayControl = new FormControl<ReadCategoryModel | null>(null);
-
     ngOnInit() {
         this.loadGifts();
         this.loadDonors();
@@ -97,14 +97,14 @@ export class ManageGifts implements OnInit {
         );
     }
 
-    
-    
+
+
     private initForms() {
         this.addGiftForm = this.fb.group({
             name: ['', [Validators.required, Validators.maxLength(100)]],
             description: ['', [Validators.required, Validators.maxLength(200)]],
-            categoryId: [0, [Validators.required]],
-            donorId: [0, [Validators.required]],
+            categoryId: [null, [Validators.required]],
+            donorId: [null, [Validators.required]],
             price: [10, [Validators.required, Validators.min(10), Validators.max(1000)]],
             imagePath: ['', [Validators.required, Validators.maxLength(200)]],
         });
@@ -112,7 +112,7 @@ export class ManageGifts implements OnInit {
         this.updateGiftForm = this.fb.group({
             name: ['', [Validators.maxLength(100)]],
             description: ['', Validators.maxLength(200)],
-            categoryId: [0],
+            categoryId: [null],
             price: [10, [Validators.min(10), Validators.max(1000)]],
             imagePath: ['', Validators.maxLength(200)],
         });
@@ -139,9 +139,9 @@ export class ManageGifts implements OnInit {
         if (filters.name) {
             this.giftService.getGiftByName(filters.name).subscribe(
                 res => this.gifts = res ? [res] : [],
-                err => {this.gifts = [];console.log(err); }
+                err => { this.gifts = []; console.log(err); }
             );
-        } 
+        }
         // 2. סינון לפי תורם (אם נבחר אובייקט תורם)
         else if (filters.donor && filters.donor.name) {
             this.giftService.getGiftsByDonor(filters.donor.name).subscribe(res => this.gifts = res);
@@ -160,7 +160,7 @@ export class ManageGifts implements OnInit {
         this.searchForm.reset();
         this.loadGifts();
     }
-    
+
     hidePopover() {
         this.op.hide();
     }
@@ -169,14 +169,22 @@ export class ManageGifts implements OnInit {
         this.showAddForm = true;
         this.addGiftPopover.show(event);
     }
-    
+
+
     closeAddGiftForm() {
         this.showAddForm = false;
         this.addGiftPopover.hide();
+
+        // איפוס הטופס הראשי
         this.addGiftForm.reset();
-        this.donorDisplayControl.reset();
+
+        // איפוס ידני של שדות התצוגה (זה מה שמונע את הופעת הערך הישן/ברירת המחדל)
+        this.donorDisplayControl.setValue(null);
+        this.categoryDisplayControl.setValue(null);
+
+        this.cdr.markForCheck();
     }
-    
+
     displayGift(event: Event, gift: ReadGiftModel) {
         if (this.selectedGift?.name === gift.name) {
             this.hidePopover();
@@ -190,17 +198,17 @@ export class ManageGifts implements OnInit {
                 price: gift.price,
                 imagePath: gift.imagePath
             });
-        this.categoryDisplayControl.setValue(this.categories.find(cat => cat.id === gift.categoryId) || null)
+            this.categoryDisplayControl.setValue(this.categories.find(cat => cat.id === gift.categoryId) || null)
 
-        this.op.show(event);
-            
-        if (this.op.container) {
-            this.op.align();
-        }
+            this.op.show(event);
+
+            if (this.op.container) {
+                this.op.align();
+            }
 
         }
     }
-    
+
     addGift() {
         if (this.addGiftForm.valid) {
             const newGift: CreateGiftModel = this.addGiftForm.value;
@@ -234,7 +242,7 @@ export class ManageGifts implements OnInit {
             this.messageService.add({ severity: 'warn', summary: 'validation', detail: 'נא למלא את כל השדות הנדרשים במלואם' });
         }
     }
-    
+
     updateGift() {
         const updateGift: UpdateGiftModel = this.updateGiftForm.value;
         if (this.updateGiftForm.valid && this.selectedGift !== null) {
@@ -248,6 +256,11 @@ export class ManageGifts implements OnInit {
                         this.gifts[index].name = updateGift.name ?? this.gifts[index].name;
                         this.gifts[index].description = updateGift.description ?? this.gifts[index].description;
                         this.gifts[index].categoryId = updateGift.categoryId ?? this.gifts[index].categoryId;
+
+                        if (this.selectedCategory) {
+                            this.gifts[index].categoryName = this.selectedCategory.name;
+                        }
+
                         this.gifts[index].price = updateGift.price ?? this.gifts[index].price;
                         this.gifts[index].imagePath = updateGift.imagePath ?? this.gifts[index].imagePath;
                     }
@@ -267,15 +280,15 @@ export class ManageGifts implements OnInit {
                     } else
                         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'נכשלה הוספת מתנה' });
 
-                        return;
-                    }
+                    return;
+                }
             );
         }
-        
+
         this.hidePopover();
         this.giftForm.reset();
     }
-    
+
     deleteGift() {
         if (this.selectedGift !== null) {
             const name: string = this.selectedGift!.name;
@@ -298,7 +311,7 @@ export class ManageGifts implements OnInit {
         this.giftForm.reset();
     }
 
-    
+
     //donors
     loadDonors() {
         this.donorService.getDonors().subscribe(d => {
@@ -335,5 +348,6 @@ export class ManageGifts implements OnInit {
         const category: ReadCategoryModel = event.value;
         this.selectedCategory = category;
         this.addGiftForm.patchValue({ categoryId: category.id });
+        this.updateGiftForm.patchValue({ categoryId: category.id });
     }
 }

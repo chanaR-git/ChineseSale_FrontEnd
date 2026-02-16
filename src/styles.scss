@@ -79,3 +79,121 @@ html, body {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
   overflow: hidden;
 }
+
+/* src/styles.scss */
+
+/* עיצוב גלובלי לטבלאות PrimeNG בממשק הניהול */
+.p-datatable {
+    .p-datatable-header {
+        background: white;
+        color: var(--primary-color);
+        border: none;
+        padding: 1.5rem;
+        font-weight: 700;
+        font-size: 1.25rem;
+    }
+
+    .p-datatable-thead > tr > th {
+        background-color: #fcfafc; // סגול בהיר מאוד
+        color: var(--primary-color);
+        border-bottom: 2px solid #f0e6ef;
+        padding: 1rem;
+        font-weight: 600;
+    }
+
+    .p-datatable-tbody > tr {
+        transition: background-color 0.2s;
+        
+        &:hover {
+            background-color: rgba(212, 175, 55, 0.05) !important; // נגיעת זהב בריחוף
+        }
+    }
+
+    /* עיצוב ה-Paginator (דפדוף) */
+    .p-paginator {
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        padding: 1rem;
+        
+        .p-paginator-pages .p-paginator-page.p-highlight {
+            background: var(--primary-color);
+            color: white;
+        }
+    }
+}
+
+/* שדרוג שדות הקלט (Inputs) */
+.p-inputtext:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+}
+
+/* התאמות רספונסיביות למערכת הניהול */
+
+.admin-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-container {
+    flex-grow: 1; /* מאפשר לטבלה לתפוס את הגובה הנותר */
+    background: white;
+}
+
+/* עיצוב המובייל של PrimeNG Stack */
+::ng-deep .p-datatable.p-datatable-stack {
+    .p-datatable-tbody > tr > td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        width: 100% !important;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 0.75rem 1rem !important;
+
+        .p-column-title {
+            display: block; // מציג את כותרת העמודה ליד הערך בנייד
+            margin-right: 1rem;
+            color: #999;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+/* הסתרת עמודות פחות חשובות בנייד כדי למנוע עומס */
+@media screen and (max-width: 960px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+}
+
+/* עיצוב זהב יוקרתי לכפתורים */
+.btn-accent-zlz {
+    background: linear-gradient(135deg, #D4AF37 0%, #F1D382 100%) !important;
+    border: none !important;
+    color: #4a3a05 !important;
+}
+
+/* עיצוב עמודת התיאור למניעת "קפיצות" בגובה */
+.description-cell {
+    max-width: 250px;       /* הגבלת רוחב מקסימלי */
+    white-space: nowrap;    /* מניעת ירידת שורה */
+    overflow: hidden;       /* הסתרת טקסט חורג */
+    text-overflow: ellipsis; /* הוספת שלוש נקודות (...) בסוף */
+    display: block;
+}
+
+/* אופציונלי: הצגת התיאור המלא רק בריחופ (Tooltip טבעי) */
+.description-cell:hover {
+    cursor: help;
+}
+
+/* הבטחת גובה אחיד לכל השורות בטבלה */
+::ng-deep .p-datatable-tbody > tr {
+    height: 70px; /* גובה קבוע לכל השורות */
+}
+
+::ng-deep .p-datatable-tbody > tr > td {
+    padding: 0.5rem 1rem !important;
+    vertical-align: middle; /* מרכז את התוכן אנכית */
+}
