@@ -11,9 +11,11 @@ import { AllGifts } from './gifts/components/all-gifts/all-gifts';
 import { Success } from './basket/components/success/success';
 import { ManagePurchases } from './purchases/components/manage-purchases/manage-purchases';
 import { Lottery } from './lottery/components/lottery/lottery';
+import { Home } from './generalComponents/home/home';
 
 export const routes: Routes = [
-    {path:'' , redirectTo: 'login', pathMatch: 'full'},
+    {path:'' , redirectTo: 'home', pathMatch: 'full'},
+    {path:'home', component: Home},
     {path :'register', component: Register},
     {path :'login', component: Login},
     {path:'gifts',component:AllGifts},
