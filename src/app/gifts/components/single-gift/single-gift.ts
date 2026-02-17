@@ -29,6 +29,7 @@ export class SingleGift {
 
   @Input() gift:ReadGiftModel | null = null;
   apiUrl: string = `${environment.apiUrl}/api/gift`;
+  imageUrl: string = environment.apiUrl + '/images/';
 
   ngOnInit() {
     
@@ -55,12 +56,15 @@ export class SingleGift {
         },
         error:(error)=>{
           console.log("Error fetching gift:",error);
+          return;
         }
       })
     }else{ // If gift is provided as input
       this.getWinnerName(this.gift);
     }
+    
   }
+
   
   addToCart(gift:ReadGiftModel | null){
     if(gift){

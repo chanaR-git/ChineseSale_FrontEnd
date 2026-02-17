@@ -10,8 +10,7 @@
         <!-- HEADER / IMAGE -->
         <ng-template pTemplate="header">
             <div class="relative overflow-hidden aspect-video flex-shrink-0">
-                <img src="/{{ gift.imagePath }}" [alt]="gift.name" class="w-full h-full object-cover shadow-2" />
-                <img [src]="apiUrl + '/' + gift.id + '/image'" />
+                <img [src]="imageUrl + gift.imagePath" class="gift-image" />
             </div>
         </ng-template>
 
