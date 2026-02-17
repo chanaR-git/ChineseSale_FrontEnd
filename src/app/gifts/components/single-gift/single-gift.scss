@@ -1,39 +1,27 @@
-:host ::ng-deep {
-
-  /* מתנה בודדת – שליטה בגודל הכללי */
-  .single-gift-full {
-    max-width: 500px;
-    margin-top: 1rem;
-    /* היה 2rem – זה חוסך גלילה */
-
-    .aspect-video {
-      aspect-ratio: 16 / 9;
-      width: 100%;
-      background-color: #f8f9fa;
-      /* רקע בהיר למילוי שוליים */
-      display: flex;
-      align-items: center;
-      justify-content: center;
+:host ::v-deep {
+    .p-card {
+        border-top: 5px solid #712059 !important; // דריסת הירוק/כחול בפס העליון
+        transition: transform 0.3s ease;
+        
+        &:hover {
+            transform: translateY(-10px);
+        }
     }
 
-    .gift-image {
-      width: 100%;
-      height: 100%;
-      /* contain מבטיח שרואים את כל התמונה מבלי שהיא תיחתך או תימרח */
-      object-fit: contain;
-      display: block;
+    // הגבלת רוחב לעמוד מוצר יחיד
+    .single-gift-full {
+        max-width: 600px;
+        margin: 2rem auto;
     }
-  }
 
-  /* שמירה על יחס תמונה */
-  .aspect-video {
-    aspect-ratio: 16 / 9;
-    width: 100%;
-  }
+    // דריסת כפתור הוספה לסל (שלא יהיה ירוק)
+    .p-button-primary {
+        background: #712059 !important;
+        border: none !important;
+    }
 
-  /* הקטנת padding רק כדי לחסוך גובה */
-  .p-card-body {
-    padding: 1.25rem;
-    /* היה 1.5rem */
-  }
+    .p-button-outlined {
+        color: #712059 !important;
+        border-color: #712059 !important;
+    }
 }

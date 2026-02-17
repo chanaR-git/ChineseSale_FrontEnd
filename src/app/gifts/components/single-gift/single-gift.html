@@ -9,8 +9,8 @@
 
         <!-- HEADER / IMAGE -->
         <ng-template pTemplate="header">
-            <div class="relative overflow-hidden aspect-video flex-shrink-0">
-                <img [src]="imageUrl + gift.imagePath" class="gift-image" />
+            <div class="relative overflow-hidden" [style.height]="isFullPage?'350px' : '220px'">
+                 <img [src]="imageUrl + gift.imagePath" class="w-full h-full object-cover shadow-2" />
             </div>
         </ng-template>
 
