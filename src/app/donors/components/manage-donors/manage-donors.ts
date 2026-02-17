@@ -93,6 +93,8 @@ export class ManageDonors implements OnInit {
     this.showAddForm = false;
     this.addDonorPopover.hide();
     this.addDonorForm.reset();
+    this.cdr.markForCheck();
+
   }
 
   displayDonor(event: Event, donor: ReadDonorModel) {
