@@ -111,7 +111,7 @@ export class ManageGifts implements OnInit {
         });
 
         this.updateGiftForm = this.fb.group({
-            name: ['', [Validators.maxLength(100)]],
+            name: ['', [Validators.maxLength(100),Validators.required]],
             description: ['', Validators.maxLength(200)],
             categoryId: [null],
             price: [10, [Validators.min(10), Validators.max(1000)]],
