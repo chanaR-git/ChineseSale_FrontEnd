@@ -19,7 +19,7 @@
 
             <!-- NAME -->
             <div class="text-xl font-bold text-primary mb-2 h-3rem overflow-hidden">
-                <a *ngIf="!isFullPage" [routerLink]="['/gifts', gift.name]">
+                <a *ngIf="!isFullPage" [routerLink]="['/gifts', gift.name]" [style]="{ color: '#d4af37' }">
                     {{ gift.name }}
                 </a>
                 <span *ngIf="isFullPage">{{ gift.name }}</span>
