@@ -7,123 +7,85 @@ import { DrawerModule } from 'primeng/drawer';
 import { CommonModule } from '@angular/common';
 import { Basket } from "../../../basket/components/basket/basket";
 
+
 @Component({
   selector: 'app-menu',
-  imports: [MenubarModule, DrawerModule, CommonModule, Basket],
+  imports: [Menubar, DrawerModule, Basket],
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
-  standalone: true
 })
-
 export class Menu implements OnInit {
+  items: MenuItem[] = [];
   private authService = inject(AuthService);
-  private loggedIn = false;
-  private role = this.authService.getUserRole();
   private router = inject(Router);
-  private showBasket = false;
-  @ViewChild('basketRef')
-  private basketRef?: Basket;
-
+  private isLoggedIn = false;
+  private role = this.authService.getUserRole();
+  visible: boolean = false;
+  showBasket = false
+  @ViewChild('basketRef') basketRef?: Basket;
   openBasket() {
     this.basketRef?.loadBasket();
   }
 
-  visible: boolean = false;
-  items: MenuItem[] = [];
 
-  private setItems() {
+  buildMenu(): void {
     this.items = [
       {
-        label: this.loggedIn ? 'התנתקות' : 'התחברות',
-        icon: this.loggedIn ? 'pi pi-user-minus' : 'pi pi-user-plus',
+        icon: this.isLoggedIn ? 'pi pi-user-minus' : 'pi pi-user-plus',
+        label: this.isLoggedIn ? 'התנתקות' : 'התחברות',
         command: () => {
-          if (this.loggedIn) {
+          if (this.isLoggedIn) {
             this.authService.logout();
+            this.router.navigate(['/login']);
+          } else {
+            this.router.navigate(['/login']);
           }
-          this.router.navigate(['login']);
-        },
+        }
       },
       {
         label: 'בית',
         icon: 'pi pi-home',
-        command: () => {          
-          this.router.navigate(['home'])
-        }
+        command: () => this.router.navigate(['/home'])
       },
       {
         label: 'כל המתנות',
         icon: 'pi pi-gift',
         command: () => {
-          this.router.navigate(['gifts'])
+          this.router.navigate(['/gifts']);
         }
       }
-    ]
+    ];
+    if (this.isLoggedIn && this.role === 'user') {
+      this.items.push({
+        label: 'הסל שלי',
+        icon: 'pi pi-shopping-cart',
+        command: () => this.visible = true
+      });
+    }
 
-
-    if (this.loggedIn) {
-      console.log(this.role);
-      
-      if (this.role === 'User') {
-        this.items.push(
-          {
-            label: 'הסל שלי',
-            icon: 'pi pi-shopping-cart',
-            command: () => {
-              this.visible = true;
-            }
-          });}
-
-      if (this.authService.isAdmin()) {
-        this.items.push(
-          {
-            label: 'ניהול',
-            icon: 'pi pi-slack',
-            items: [
-              {
-                label: 'מתנות',
-                icon: 'pi pi-gift',
-                command: () => {
-                  this.router.navigate(['management/gifts'])
-                }
-              },
-              {
-                label: 'תורמים',
-                icon: 'pi pi-building-columns',
-                command: () => {
-                  this.router.navigate(['management/donors'])
-                }
-              },
-              {
-                label: 'רכישות',
-                icon: 'pi pi-wallet',
-                command: () => {
-                  this.router.navigate(['management/purchases'])
-                }
-              },
-              {
-                label: 'הגרלה',
-                icon: 'pi pi-sparkles',
-                command: () => {
-                  this.router.navigate(['management/lottery'])
-                }
-              }
-            ]
-          });
-      }
+    if (this.isLoggedIn && this.authService.isAdmin()) {
+      this.items.push({
+        label: 'ניהול',
+        icon: 'pi pi-slack',
+        items: [
+          { label: 'מתנות', icon: 'pi pi-gift', command: () => this.router.navigate(['/management/gift']) },
+          { label: 'תורמים', icon: 'pi pi-building-columns', command: () => this.router.navigate(['/management/donor']) },
+          { label: 'רכישות', icon: 'pi pi-wallet', command: () => this.router.navigate(['/management/purchase']) },
+          { label: 'הגרלה', icon: 'pi pi-sparkles', command: () => this.router.navigate(['/management/lottery']) }
+        ]
+      });
     }
   }
-  ngOnInit() {
+  ngOnInit(): void {
+    this.authService.loggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+      this.buildMenu();
+    });
+    this.authService.role$.subscribe(role => {
+      this.role = role;
+      console.log('Menu detected role change:', role);
 
-    this.authService.loggedIn$.subscribe((loggedIn) => {
-      this.loggedIn = loggedIn;
-
-
-      this.authService.role$.subscribe((role) => {
-        this.role = role;
-        this.setItems();
-      });
-
-      this.setItems();
-    })
+      this.buildMenu();
+    });
   }
 }
