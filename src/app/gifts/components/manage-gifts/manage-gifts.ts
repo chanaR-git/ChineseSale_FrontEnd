@@ -19,6 +19,7 @@ import { CategoryService } from '../../../categories/service/category-service';
 import { ReadCategoryModel } from '../../../categories/models/readCategory.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { CardModule } from 'primeng/card';
+import { environment } from '../../../../enviorments/enviorment';
 
 
 

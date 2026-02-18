@@ -65,7 +65,7 @@
                     <td>{{ gift.donorName }}</td>
                     <td class="font-bold text-gold">₪{{ gift.price }}</td>
                     <td class="text-center">
-                        <img [src]="gift.imagePath" width="45" class="shadow-1 border-round border-1 border-200">
+                        <img [src]=" gift.imagePath" width="45" class="shadow-1 border-round border-1 border-200">
                     </td>
                     <td class="text-center">
                         <p-button (onClick)="displayGift($event, gift)" icon="pi pi-pencil"
