@@ -55,12 +55,10 @@
                 </p-button>
             </div>
 
-            <!-- WINNER -->
-            <div *ngIf="winnerName !== ''" class="flex flex-column align-items-center justify-content-center mt-4 p-3 border-round-lg bg-green-50">
-                <span class="text-green-700 text-lg font-semibold">
+     
+                <span *ngIf="winnerName !== ''" >
                      הזוכה המאושר:  {{ winnerName }}
                 </span>
-            </div>
 
             <!-- BACK -->
             <p-button *ngIf="isFullPage" label="חזרה לכל המתנות" icon="pi pi-arrow-right" [link]="true"
