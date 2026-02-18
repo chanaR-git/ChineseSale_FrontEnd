@@ -55,7 +55,7 @@ export class Menu implements OnInit {
         }
       }
     ];
-    if (this.isLoggedIn && this.role === 'user') {
+    if (this.isLoggedIn && this.role === 'User') {
       this.items.push({
         label: 'הסל שלי',
         icon: 'pi pi-shopping-cart',
@@ -68,9 +68,9 @@ export class Menu implements OnInit {
         label: 'ניהול',
         icon: 'pi pi-slack',
         items: [
-          { label: 'מתנות', icon: 'pi pi-gift', command: () => this.router.navigate(['/management/gift']) },
-          { label: 'תורמים', icon: 'pi pi-building-columns', command: () => this.router.navigate(['/management/donor']) },
-          { label: 'רכישות', icon: 'pi pi-wallet', command: () => this.router.navigate(['/management/purchase']) },
+          { label: 'מתנות', icon: 'pi pi-gift', command: () => this.router.navigate(['/management/gifts']) },
+          { label: 'תורמים', icon: 'pi pi-building-columns', command: () => this.router.navigate(['/management/donors']) },
+          { label: 'רכישות', icon: 'pi pi-wallet', command: () => this.router.navigate(['/management/purchases']) },
           { label: 'הגרלה', icon: 'pi pi-sparkles', command: () => this.router.navigate(['/management/lottery']) }
         ]
       });
